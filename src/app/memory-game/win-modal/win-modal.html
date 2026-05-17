@@ -1,0 +1,51 @@
+<p>win-modal works!</p>
+<!-- Overlay (ciemne tło na cały ekran) -->
+<div
+  class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 animate-in fade-in duration-300"
+>
+  <!-- Modal -->
+  <div
+    class="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300"
+  >
+    <div class="text-6xl mb-4">.i.</div>
+
+    <h2 class="text-3xl font-bold text-white mb-2">Essa</h2>
+
+    @if (isNewBest()) {
+      <p class="text-emerald-400 text-sm font-medium mb-6">Rozjebaleś tamten wynik.</p>
+    } @else {
+      <p class="text-zinc-500 mb-6">Pięknie</p>
+    }
+
+    <!-- Statystyki bieżącej rozgrywki -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="bg-zinc-950 rounded-xl p-4">
+        <div class="text-xs text-zinc-500 uppercase tracking-wide">Ruchy</div>
+        <div class="text-3xl font-bold text-white">{{ moves() }}</div>
+      </div>
+      <div class="bg-zinc-950 rounded-xl p-4">
+        <div class="text-xs text-zinc-500 uppercase tracking-wide">Czas</div>
+        <div class="text-3xl font-bold text-white tabular-nums">
+          {{ formatTime(timeElapsed()) }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Najlepszy wynik (jeśli jest) -->
+    @if (bestScore(); as best) {
+      <div class="bg-zinc-800/50 rounded-xl p-3 mb-6 text-sm">
+        <span class="text-zinc-500">Najlepszy: </span>
+        <span class="text-zinc-300"
+          >{{ best.moves }} ruchów · {{ formatTime(best.timeElapsed) }}</span
+        >
+      </div>
+    }
+
+    <button
+      (click)="playAgain.emit()"
+      class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg transition"
+    >
+      Nowa gierka
+    </button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<button
+  type="button"
+  (click)="onClick()"
+  class="aspect-square w-full perspective:1000px cursor-pointer disabled:cursor-default"
+  [disabled]="card().isMatched"
+>
+  <div
+    class="relative w-full h-full transition-transform duration-500 transform-3d"
+    [class]="card().isFlipped || card().isMatched ? 'transform-[rotateY(180deg)]' : ''"
+  >
+    <!-- FRONT -->
+    <div
+      class="absolute inset-0 backface-hidden rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg"
+    >
+      ?
+    </div>
+
+    <!-- BACK -->
+    <div
+      class="absolute inset-0 backface-hidden transform-[rotateY(180deg)] rounded-xl flex items-center justify-center text-4xl sm:text-5xl shadow-lg"
+      [class.bg-emerald-500]="card().isMatched"
+      [class.bg-white]="!card().isMatched"
+    >
+      <img
+        [src]="card().value"
+        alt="Card image"
+        class="w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</button>

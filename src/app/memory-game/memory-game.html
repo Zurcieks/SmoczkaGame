@@ -1,0 +1,52 @@
+<div class="min-h-screen bg-zinc-950 text-zinc-100 py-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <header class="mb-6 text-center">
+      <h1 class="text-4xl font-bold tracking-tight">
+        Smoczka<span class="text-indigo-500">Game</span>
+      </h1>
+      <p class="text-zinc-500 mt-2">Znajdź wszystkie debili</p>
+    </header>
+
+    <!-- Wybór poziomu + Nowa gra -->
+    <div class="grid grid-cols-[1fr_auto] gap-3 mb-4 items-center">
+      <app-level-selector [currentLevel]="level()" (levelChange)="onLevelChange($event)" />
+      <button
+        (click)="startNewGame()"
+        class="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 text-sm font-medium transition"
+      >
+        nowa gierka
+      </button>
+    </div>
+
+    <!-- Statystyki -->
+    <div class="mb-6">
+      <app-stats-bar
+        [moves]="moves()"
+        [pairsFound]="pairsFound()"
+        [totalPairs]="levelConfig().pairsCount"
+        [timeElapsed]="timeElapsed()"
+      />
+    </div>
+
+    <!-- Plansza -->
+    <div
+      class="grid gap-3"
+      [style.grid-template-columns]="'repeat(' + levelConfig().cols + ', minmax(0, 1fr))'"
+    >
+      @for (card of cards(); track card.id) {
+        <app-card [card]="card" (cardClick)="onCardClick($event)" />
+      }
+    </div>
+
+    <!-- Win modal -->
+    @if (status() === 'won') {
+      <app-win-modal
+        [moves]="moves()"
+        [timeElapsed]="timeElapsed()"
+        [bestScore]="currentBestScore()"
+        [isNewBest]="isNewBest()"
+        (playAgain)="startNewGame()"
+      />
+    }
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="grid grid-cols-3 gap-2">
+  @for (level of levels; track level) {
+    <button
+      type="button"
+      (click)="levelChange.emit(level)"
+      class="px-3 py-2 rounded-lg text-sm font-medium transition"
+      [class]="
+        currentLevel() === level
+          ? 'bg-indigo-600 text-white'
+          : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 border border-zinc-800'
+      "
+    >
+      {{ levelConfigs[level].label }}
+    </button>
+  }
+</div>
